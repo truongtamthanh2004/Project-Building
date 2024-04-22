@@ -24,7 +24,6 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 			String areaTo = (String)params.get("areaTo");
 			String staffId = (String)params.get("staffId");
 			
-			
 			if ((areaFrom != null && !areaFrom.equals("")) && (areaTo != null && !areaTo.equals(""))) {
 				sql += " JOIN rentarea on rentarea.buildingid = building.id ";
 			}
@@ -77,9 +76,7 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 	                    sql += (" AND building.rentprice <= " + value);
 	                }
 	            }
-	        }
-
-	        
+	        }	        
 	    }
 	    
 	    if (typeCode != null && !typeCode.isEmpty()) {
@@ -89,7 +86,6 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 	    
 	    return sql;
 	}
-
 
 	@Override
 	public List<BuildingEntity> findAll(Map<String, Object> params, List<String> typeCode) {
@@ -124,7 +120,6 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 				
 				result.add(building);
 			}
-		
 			System.out.println("Connected database successfully...");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -134,7 +129,4 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 		
 		return result;
 	}
-
-	
-
 }
