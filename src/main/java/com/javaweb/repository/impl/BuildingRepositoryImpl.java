@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.entity.BuildingEntity;
 import com.javaweb.utils.ConnectionUtil;
+import com.javaweb.utils.StringUtil;
 
 @Repository
 public class BuildingRepositoryImpl implements BuildingRepository{
@@ -24,11 +25,10 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 			String areaTo = (String)params.get("areaTo");
 			String staffId = (String)params.get("staffId");
 			
-			
-			if ((areaFrom != null && !areaFrom.equals("")) && (areaTo != null && !areaTo.equals(""))) {
+			if (StringUtil.checkString(areaFrom) || StringUtil.checkString(areaTo)) {
 				sql += " JOIN rentarea on rentarea.buildingid = building.id ";
 			}
-			if (staffId != null && !staffId.equals("")) {
+			if (StringUtil.checkString(staffId)) {
 				sql += " JOIN assignmentbuilding on assignmentbuilding.buildingid = building.id ";
 			}
 		}
@@ -52,34 +52,34 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 	                if (!key.equals("staffId") && !key.startsWith("area") && !key.startsWith("rentPrice") && !key.equals("typeCode")) {
 	                    if (value.matches("\\d+")) {
 	                        sql += (" AND building." + key + " = " + value);
-	                    } else if (!value.equals("")) {
+	                    } else if (StringUtil.checkString(value)) {
 	                        sql += (" AND building." + key + " LIKE '%" + value + "%'");
 	                    }
 	                }
+	                
+	                if (StringUtil.checkString(value)) {
+	                	if (key.equals("staffId")) {
+		                    sql += (" AND assignmentbuilding.staffid = " + value);
+		                }
 
-	                if (key.equals("staffId") && !value.equals("")) {
-	                    sql += (" AND assignmentbuilding.staffid = " + value);
-	                }
+		                if (key.equals("areaFrom")) {
+		                    sql += (" AND rentarea.value >= " + value);
+		                }
 
-	                if (key.equals("areaFrom") && !value.equals("")) {
-	                    sql += (" AND rentarea.value >= " + value);
-	                }
+		                if (key.equals("areaTo")) {
+		                    sql += (" AND rentarea.value <= " + value);
+		                }
 
-	                if (key.equals("areaTo") && !value.equals("")) {
-	                    sql += (" AND rentarea.value <= " + value);
-	                }
+		                if (key.equals("rentPriceFrom")) {
+		                    sql += (" AND building.rentprice >= " + value);
+		                }
 
-	                if (key.equals("rentPriceFrom") && !value.equals("")) {
-	                    sql += (" AND building.rentprice >= " + value);
-	                }
-
-	                if (key.equals("rentPriceTo") && !value.equals("")) {
-	                    sql += (" AND building.rentprice <= " + value);
+		                if (key.equals("rentPriceTo")) {
+		                    sql += (" AND building.rentprice <= " + value);
+		                }
 	                }
 	            }
-	        }
-
-	        
+	        }	        
 	    }
 	    
 	    if (typeCode != null && !typeCode.isEmpty()) {
@@ -89,7 +89,6 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 	    
 	    return sql;
 	}
-
 
 	@Override
 	public List<BuildingEntity> findAll(Map<String, Object> params, List<String> typeCode) {
@@ -124,7 +123,6 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 				
 				result.add(building);
 			}
-		
 			System.out.println("Connected database successfully...");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -134,7 +132,4 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 		
 		return result;
 	}
-
-	
-
 }

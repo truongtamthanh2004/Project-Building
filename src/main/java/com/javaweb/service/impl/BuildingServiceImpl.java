@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.DTO.BuildingDTO;
+import com.javaweb.converter.BuildingConverter;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.DistrictRepository;
 import com.javaweb.repository.RentAreaRepository;
@@ -19,10 +20,9 @@ import com.javaweb.service.BuildingService;
 public class BuildingServiceImpl implements BuildingService{
 	@Autowired
 	private BuildingRepository buildingRepository;
+	
 	@Autowired
-	private DistrictRepository districtRepository;
-	@Autowired
-	private RentAreaRepository rentAreaRepository;
+	private BuildingConverter buildingConverter;
 	
 	@Override
 	public List<BuildingDTO> findBuildingDTO(Map<String, Object> params, List<String> typeCode) {
@@ -31,42 +31,7 @@ public class BuildingServiceImpl implements BuildingService{
 		List<BuildingDTO> buildingDTOs = new ArrayList<BuildingDTO>();
 		for (BuildingEntity x : buildingEntities) {
 			// New building DTO
-			BuildingDTO buildingDTO = new BuildingDTO();
-			
-			// Name
-			buildingDTO.setName(x.getName());
-			
-			// Address
-			DistrictEntity districtEntity = districtRepository.findDistrictNameById(x.getDistrictId());
-			buildingDTO.setAddress(x.getStreet() + ", " + x.getWard() + ", " + districtEntity.getName());
-			
-			// Number of basement
-			buildingDTO.setNumberOfBasement(x.getNumberOfBasement());
-			
-			// Manager's name
-			buildingDTO.setManagerName(x.getManagerName());
-			
-			// Manager's phone number
-			buildingDTO.setManagerPhoneNumber(x.getManagerPhoneNumber());
-			
-			// Floor area
-			buildingDTO.setFloorArea(x.getFloorArea());
-			
-			// Free area
-			buildingDTO.setFreeArea("0");
-			
-			// Rent area
-			String area = rentAreaRepository.findAreaByBuildingId(x.getId());
-			buildingDTO.setRentArea(area);
-			
-			// Rent price
-			buildingDTO.setRentFee(x.getRentPrice());
-			
-			// Brokerage fee
-			buildingDTO.setAgencyFee(x.getBrokerageFee());
-			
-			// Service fee
-			buildingDTO.setServiceFee(x.getServiceFee());
+			BuildingDTO buildingDTO = buildingConverter.toBuildingDTO(x);
 			
 			buildingDTOs.add(buildingDTO);
 		}
