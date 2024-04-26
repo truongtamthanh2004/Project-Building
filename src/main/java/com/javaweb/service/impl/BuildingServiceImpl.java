@@ -38,5 +38,4 @@ public class BuildingServiceImpl implements BuildingService{
 		
 		return buildingDTOs;
 	}
-
 }

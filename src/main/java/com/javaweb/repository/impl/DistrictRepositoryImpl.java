@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.javaweb.repository.DistrictRepository;
 import com.javaweb.repository.entity.DistrictEntity;
 import com.javaweb.utils.ConnectionUtil;
+import com.javaweb.utils.StringUtil;
 
 @Repository
 public class DistrictRepositoryImpl implements DistrictRepository{
@@ -18,7 +19,7 @@ public class DistrictRepositoryImpl implements DistrictRepository{
 	public DistrictEntity findDistrictNameById(String id) {
 		// TODO Auto-generated method stub
 		
-		if (id != null && !id.equals("")) {
+		if (StringUtil.checkString(id)) {
 			String sql = "SELECT * FROM district where id = " + id;
 			DistrictEntity districtEntity = new DistrictEntity();
 			try (
@@ -40,7 +41,5 @@ public class DistrictRepositoryImpl implements DistrictRepository{
 		}
 		
 		return null;
-		
 	}
-
 }

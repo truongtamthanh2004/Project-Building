@@ -9,14 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.utils.ConnectionUtil;
+import com.javaweb.utils.StringUtil;
 
 @Repository
 public class RentAreaRepositoryImpl implements RentAreaRepository{
-
 	@Override
 	public String findAreaByBuildingId(String buildingId) {
 		// TODO Auto-generated method stub
-		if (buildingId != null && !buildingId.equals("")) {
+		if (StringUtil.checkString(buildingId)) {
 			String sql = "SELECT * FROM rentarea where buildingid = " + buildingId;
 			String area = "";
 			
@@ -39,5 +39,4 @@ public class RentAreaRepositoryImpl implements RentAreaRepository{
 		
 		return null;
 	}
-
 }
