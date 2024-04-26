@@ -9,8 +9,8 @@ public class BuildingDTO {
 	private String floorArea;
 	private String freeArea;
 	private String rentArea;
-	private String rentFee;
-	private String agencyFee;
+	private String rentPrice;
+	private String brokerageFee;
 	private String serviceFee;
 	public String getName() {
 		return name;
@@ -60,17 +60,17 @@ public class BuildingDTO {
 	public void setRentArea(String rentArea) {
 		this.rentArea = rentArea;
 	}
-	public String getRentFee() {
-		return rentFee;
+	public String getRentPrice() {
+		return rentPrice;
 	}
-	public void setRentFee(String rentFee) {
-		this.rentFee = rentFee;
+	public void setRentPrice(String rentPrice) {
+		this.rentPrice = rentPrice;
 	}
-	public String getAgencyFee() {
-		return agencyFee;
+	public String getBrokerageFee() {
+		return brokerageFee;
 	}
-	public void setAgencyFee(String agencyFee) {
-		this.agencyFee = agencyFee;
+	public void setBrokerageFee(String brokerageFee) {
+		this.brokerageFee = brokerageFee;
 	}
 	public String getServiceFee() {
 		return serviceFee;

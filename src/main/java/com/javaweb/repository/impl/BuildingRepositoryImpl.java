@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
@@ -82,10 +83,18 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 	        }	        
 	    }
 	    
+	    // Java 7
+//	    if (typeCode != null && !typeCode.isEmpty()) {
+//	    	String result = "IN (\'" + String.join("\',\'", typeCode) + "\')";
+//            sql += (" AND renttype.code " + result);
+//        }
+	    
+	    // Java 8
 	    if (typeCode != null && !typeCode.isEmpty()) {
-	    	String result = "IN (\'" + String.join("\',\'", typeCode) + "\')";
-            sql += (" AND renttype.code " + result);
-        }
+	    	sql += " AND (";
+	    	String sqlJoin = typeCode.stream().map(item -> "renttype.code LIKE '%" + item + "%'").collect(Collectors.joining(" OR "));
+	    	sql += (sqlJoin + ") ");
+	    }
 	    
 	    return sql;
 	}
