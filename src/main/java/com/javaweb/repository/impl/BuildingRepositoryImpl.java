@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import com.javaweb.builder.BuildingSearchBuilder;
@@ -20,6 +25,8 @@ import com.javaweb.utils.StringUtil;
 
 @Repository
 public class BuildingRepositoryImpl implements BuildingRepository{
+	@PersistenceContext
+	private EntityManager entityManager;
 	public String join(BuildingSearchBuilder builder) {
 		String sql = "";
 		
@@ -124,35 +131,8 @@ public class BuildingRepositoryImpl implements BuildingRepository{
 		
 		System.out.println(sql);
 		
-		List<BuildingEntity> result = new ArrayList<BuildingEntity>();
-		try (
-				Connection conn = ConnectionUtil.getConnection(); 
-				Statement stm = conn.createStatement(); 
-				ResultSet rs = stm.executeQuery(sql)
-			) {
-			while (rs.next()) {
-				BuildingEntity building = new BuildingEntity();
-				building.setId(rs.getString("id"));
-				building.setName(rs.getString("name"));
-				building.setStreet(rs.getString("street"));
-				building.setWard(rs.getString("ward"));
-				building.setDistrictId(rs.getString("districtid"));
-				building.setNumberOfBasement(rs.getString("numberofbasement"));
-				building.setFloorArea(rs.getString("floorarea"));
-				building.setRentPrice(rs.getString("rentprice"));
-				building.setRentPriceDescription(rs.getString("rentpricedescription"));
-				building.setManagerName(rs.getString("managername"));
-				building.setManagerPhoneNumber(rs.getString("managerphonenumber"));
-				
-				result.add(building);
-			}
-			System.out.println("Connected database successfully...");
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-			System.out.println("Connected database failed...");
-		}
+		Query query = entityManager.createNativeQuery(sql, BuildingEntity.class);
 		
-		return result;
+		return query.getResultList();
 	}
 }

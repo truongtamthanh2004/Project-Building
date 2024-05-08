@@ -1,43 +1,146 @@
 package com.javaweb.repository.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="building")
 public class BuildingEntity {
-	private String id;
+	@Id // Primary key
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Auto Increment
+	private Long id;
+	
+	@Column(name="name")
 	private String name;
+	
+	@Column(name="street")
 	private String street;
+	
+	@Column(name="ward")
 	private String ward;
-	private String districtId;
+	
+//	@Column(name="districtid")
+//	private String districtId;
+	
+	@Column(name="structure")
 	private String structure;
+	
+	@Column(name="numberofbasement")
 	private String numberOfBasement;
+	
+	@Column(name="floorarea")
 	private String floorArea;
+	
+	@Column(name="direction")
 	private String direction;
+	
+	@Column(name="level")
 	private String level;
+	
+	@Column(name="rentprice")
 	private String rentPrice;
+	
+	@Column(name="rentpricedescription")
 	private String rentPriceDescription;
+	
+	@Column(name="servicefee")
 	private String serviceFee;
+	
+	@Column(name="carfee")
 	private String carFee;
+	
+	@Column(name="motorbikefee")
 	private String motorbikeFee;
+	
+	@Column(name="overtimefee")
 	private String overtimeFee;
+	
+	@Column(name="waterfee")
 	private String waterFee;
+	
+	@Column(name="electricityfee")
 	private String electricityFee;
+	
+	@Column(name="deposit")
 	private String deposit;
+	
+	@Column(name="payment")
 	private String payment;
+	
+	@Column(name="renttime")
 	private String renttime;
+	
+	@Column(name="decorationtime")
 	private String decorationTime;
+	
+	@Column(name="brokeragefee")
 	private String brokerageFee;
+	
+	@Column(name="note")
 	private String note;
+	
+	@Column(name="linkofbuilding")
 	private String linkOfBuilding;
+	
+	@Column(name="map")
 	private String map;
+	
+	@Column(name="image")
 	private String image;
+	
+	@Column(name="createddate")
 	private String createdDate;
+	
+	@Column(name="modifieddate")
 	private String modifiedDate;
+	
+	@Column(name="createdby")
 	private String createdBy;
+	
+	@Column(name="modifiedby")
 	private String modifiedBy;
+	
+	@Column(name="managername")
 	private String managerName;
+	
+	@Column(name="managerphonenumber")
 	private String managerPhoneNumber;
-	public String getId() {
+	
+	@OneToMany(mappedBy="building", fetch=FetchType.LAZY) // mappedBy phai giong voi variable of RentAreaEntity
+	private List<RentAreaEntity> rentAreas = new ArrayList<>();
+	
+	@ManyToOne
+	@JoinColumn(name="districtid")
+	private DistrictEntity district;
+	
+	public DistrictEntity getDistrict() {
+		return district;
+	}
+	public void setDistrict(DistrictEntity district) {
+		this.district = district;
+	}
+	public List<RentAreaEntity> getRentAreas() {
+		return rentAreas;
+	}
+	public void setRentAreas(List<RentAreaEntity> rentAreas) {
+		this.rentAreas = rentAreas;
+	}
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -57,12 +160,6 @@ public class BuildingEntity {
 	}
 	public void setWard(String ward) {
 		this.ward = ward;
-	}
-	public String getDistrictId() {
-		return districtId;
-	}
-	public void setDistrictId(String districtId) {
-		this.districtId = districtId;
 	}
 	public String getStructure() {
 		return structure;

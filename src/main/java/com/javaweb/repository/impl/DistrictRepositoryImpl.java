@@ -30,7 +30,7 @@ public class DistrictRepositoryImpl implements DistrictRepository{
 				while (rs.next()) {
 					districtEntity.setName(rs.getString("name"));
 					districtEntity.setCode(rs.getString("code"));
-					districtEntity.setId(rs.getString("id"));
+					districtEntity.setId(rs.getLong("id"));
 				}
 				
 			} catch (SQLException e) {

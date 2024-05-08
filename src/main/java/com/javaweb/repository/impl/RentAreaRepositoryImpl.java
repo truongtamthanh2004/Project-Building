@@ -14,9 +14,9 @@ import com.javaweb.utils.StringUtil;
 @Repository
 public class RentAreaRepositoryImpl implements RentAreaRepository{
 	@Override
-	public String findAreaByBuildingId(String buildingId) {
+	public String findAreaByBuildingId(Long buildingId) {
 		// TODO Auto-generated method stub
-		if (StringUtil.checkString(buildingId)) {
+		if (buildingId != null) {
 			String sql = "SELECT * FROM rentarea where buildingid = " + buildingId;
 			String area = "";
 			
