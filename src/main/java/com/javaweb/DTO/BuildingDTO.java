@@ -4,6 +4,7 @@ public class BuildingDTO {
 	private String name;
 	private String address;
 	private String numberOfBasement;
+//	private Long districtId;
 	private String managerName;
 	private String managerPhoneNumber;
 	private String floorArea;
@@ -12,6 +13,13 @@ public class BuildingDTO {
 	private String rentPrice;
 	private String brokerageFee;
 	private String serviceFee;
+	
+//	public Long getDistrictId() {
+//		return districtId;
+//	}
+//	public void setDistrictId(Long districtId) {
+//		this.districtId = districtId;
+//	}
 	public String getName() {
 		return name;
 	}

@@ -1,4 +1,4 @@
-package com.javaweb.repository.impl;
+package com.javaweb.repository.custom.impl;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.utils.ConnectionUtil;
 import com.javaweb.utils.StringUtil;
-
-@Repository
-public class RentAreaRepositoryImpl implements RentAreaRepository{
-	@Override
+//implements RentAreaRepository
+//@Repository
+public class RentAreaRepositoryImpl {
+	//@Override
 	public String findAreaByBuildingId(Long buildingId) {
 		// TODO Auto-generated method stub
 		if (buildingId != null) {
